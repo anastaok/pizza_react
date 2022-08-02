@@ -1,36 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 
-class Categories extends React.Component {
-  render() {
-    const { items, onClickItem } = this.props;
-    return (
-      <div className="categories">
-        <ul>
-          <li className="active">Все</li>
-          {items.map((name, index) => (
-            <li onClick={() => onClickItem(name)} key={`${name}_${index}`}>
+const Categories = ({ items, onClickItem }) => {
+  const [activeItem, setActiveItem] = useState();
+
+  const onSelectItem = (index) => {
+    setActiveItem(index);
+  };
+
+  return (
+    <div className="categories">
+      <ul>
+        <li
+          className={activeItem === null ? "active" : ""}
+          onClick={() => onSelectItem(null)}
+        >
+          Все
+        </li>
+        {items &&
+          items.map((name, index) => (
+            <li
+              className={activeItem === index ? "active" : ""}
+              onClick={() => onSelectItem(index)}
+              key={`${name}_${index}`}
+            >
               {name}
             </li>
           ))}
-        </ul>
-      </div>
-    );
-  }
-}
-
-// const Categories = ({ items, onClickItem }) => {
-//   return (
-//     <div className="categories">
-//       <ul>
-//         <li className="active">Все</li>
-//         {items.map((name, index) => (
-//           <li onClick={() => onClickItem(name)} key={`${name}_${index}`}>
-//             {name}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
+      </ul>
+    </div>
+  );
+};
 
 export default Categories;
