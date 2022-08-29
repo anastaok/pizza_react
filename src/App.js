@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   // установка JSON через global в powershell
-  // C:\Users\79375\desktop\Учеба\react\react-pizza> json-server --watch public/db.json --port 3001
+  // C:\Users\79375\desktop\Учеба\react\react-pizza>
 
   return (
     <div className="wrapper">
