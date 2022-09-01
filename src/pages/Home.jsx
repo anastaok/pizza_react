@@ -1,37 +1,38 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
   Categories,
-  PizzasBlock,
   SortPopup,
+  PizzaBlock,
   PizzaLoadingBlock,
 } from "../components";
-import { useSelector, useDispatch } from "react-redux";
 
 import { setCategory, setSortBy } from "../redux/actions/filters";
 import { fetchPizzas } from "../redux/actions/pizzas";
 import { addPizzaToCart } from "../redux/actions/cart";
 
-const categoreNames = [
+const categoryNames = [
   "Мясные",
-  "Вегетарианские",
+  "Вегетарианская",
   "Гриль",
   "Острые",
   "Закрытые",
 ];
-const sortItems = [
+const sortIems = [
   { name: "популярности", type: "popular", order: "desc" },
   { name: "цене", type: "price", order: "desc" },
-  { name: "алфавиту", type: "name", order: "asc" },
+  { name: "алфавит", type: "name", order: "asc" },
 ];
 
-const Home = () => {
+function Home() {
   const dispatch = useDispatch();
   const items = useSelector(({ pizzas }) => pizzas.items);
   const cartItems = useSelector(({ cart }) => cart.items);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
-  const { sortBy, category } = useSelector(({ filter }) => filter);
+  const { category, sortBy } = useSelector(({ filters }) => filters);
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(fetchPizzas(sortBy, category));
   }, [category, sortBy]);
 
@@ -56,11 +57,11 @@ const Home = () => {
         <Categories
           activeCategory={category}
           onClickCategory={onSelectCategory}
-          items={categoreNames}
+          items={categoryNames}
         />
         <SortPopup
           activeSortType={sortBy.type}
-          items={sortItems}
+          items={sortIems}
           onClickSortType={onSelectSortType}
         />
       </div>
@@ -68,7 +69,7 @@ const Home = () => {
       <div className="content__items">
         {isLoaded
           ? items.map((obj) => (
-              <PizzasBlock
+              <PizzaBlock
                 onClickAddPizza={handleAddPizzaToCart}
                 key={obj.id}
                 addedCount={cartItems[obj.id] && cartItems[obj.id].items.length}
@@ -81,6 +82,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;
