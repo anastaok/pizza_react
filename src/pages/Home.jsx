@@ -30,7 +30,7 @@ function Home() {
   const items = useSelector(({ pizzas }) => pizzas.items);
   const cartItems = useSelector(({ cart }) => cart.items);
   const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded);
-  const { category, sortBy } = useSelector(({ filters }) => filters);
+  const { category, sortBy } = useSelector(({ filter }) => filter);
 
   React.useEffect(() => {
     dispatch(fetchPizzas(sortBy, category));
